@@ -1,0 +1,34 @@
+*read in the data from the DEFAULT location
+read (solow.txt) q k a/skiplines=1
+*print out the data to check it
+print q k a
+*
+*transform the data
+genr qa=q/a
+genr logqa=log(qa)
+genr logk=log(k)
+genr rk=-1/k
+*
+*reproduce Solow's results
+*
+ols qa k/beg=1 end=34
+ols qa logk/beg=1 end=34
+ols qa rk/beg=1 end=34
+ols logqa logk/beg=1 end=34
+ols logqa rk/beg=1 end=34
+*
+*add the war years
+ols qa k
+ols qa logk
+ols qa rk
+ols logqa logk
+ols logqa rk
+*
+*add the war years with objective trimming
+robust qa k /trim=.2
+robust qa logk /trim=.2
+robust qa rk/trim=.2
+robust logqa logk /trim=.2
+robust logqa rk /trim=.2
+
+
